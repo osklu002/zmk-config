@@ -16,7 +16,7 @@ jobs:
         run: pip install keymap-drawer
 
       - name: Generate keymap yaml
-        run: keymap parse -z config/boards/shields/brain/brain.keymap > keymap.yaml
+        run: keymap parse -z config/brain.keymap > keymap.yaml
 
       - name: Generate svg
         run: |
