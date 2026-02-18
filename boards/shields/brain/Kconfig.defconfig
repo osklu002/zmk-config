@@ -1,0 +1,18 @@
+# Copyright (c) 2022 Duccio Breschi
+# Copyright (c) 2023 iamDrakkir
+# SPDX-License-Identifier: MIT
+
+if SHIELD_BRAIN_LEFT
+
+config ZMK_KEYBOARD_NAME
+    default "Brain"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif
+
+if SHIELD_BRAIN_LEFT || SHIELD_BRAIN_RIGHT
+config ZMK_SPLIT
+    default y
+endif
