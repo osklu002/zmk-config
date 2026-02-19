@@ -73,7 +73,7 @@
 // ╰────╮                │ │              ╭────────╯
 //      ╰─────────────────╯ ╰─────────────╯
             bindings = <
-            &none       &none      &none       &kp RBRC    &kp SE_SQT      &kp PG_UP      &kp HOME  &kp UP    &kp END    &kp DEL
+            &none       &kp RBRC   &none       &kp MINUS   &kp SE_SQT      &kp PG_UP      &kp HOME  &kp UP    &kp END    &kp DEL
 &trans      &none       &kp SE_LT  &kp SE_LBKT &kp SE_LBRC &kp SE_LPAR    &kp PG_DN      &kp LEFT  &kp DOWN  &kp RIGHT  &none  &none
 &trans      &kp SE_PIPE &kp SE_GT  &kp SE_RBKT &kp SE_RBRC &kp SE_RPAR    &kp C_AC_BACK  &none     &none     &none      &none  &none
                         &trans     &trans      &trans                      &trans         &trans    &trans
