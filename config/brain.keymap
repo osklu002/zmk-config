@@ -5,149 +5,78 @@
  */
 
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/outputs.h>
 #include "swe_keys.h"
 
-#define DEFAULT     0
-#define GAMING      1
-#define SYMBOLS_SWE 2
-#define FUNC        3
-#define NUMBER      4
-#define SETTINGS    5
+#define DEFAULT 0
+#define NUM_FN  1
+#define NAV_SYM 2
 
 / {
     behaviors {
-        hm: homerow_mods {
+        hm: hold_tap {
             compatible = "zmk,behavior-hold-tap";
-            label = "HOMEROW_MODS";
             #binding-cells = <2>;
             tapping-term-ms = <200>;
             quick-tap-ms = <0>;
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
         };
-
-        hs: homerow_mods_slow {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HOMEROW_MODS_SLOW";
-            #binding-cells = <2>;
-            tapping-term-ms = <300>;
-            quick-tap-ms = <0>;
-            flavor = "tap-preferred";
-            bindings = <&kp>, <&kp>;
-        };
-    };
-
-    cond_layers {
-        compatible = "zmk,conditional-layers";
-
-        // Define SETTINGS layer as tri-state
-
-        func_tristate {
-            if-layers = <SYMBOLS_SWE FUNC>;
-            then-layer = <SETTINGS>;
-        };
     };
 
     /*           40 Keys
-╭─────────────────╮ ╭─────────────────╮
-│    0  1  2  3  4│ │ 5  6  7  8  9   │
-│10 11 12 13 14 15│ │16 17 18 19 20 21│
-│22 23 24 25 26 27│ │28 29 30 31 32 33│
-╰────────╮34 35 36│ │37 38 39╭────────╯
-         ╰────────╯ ╰────────╯       */
-    /*    combos {
-        compatible = "zmk,combos";
-
-        combo_esc {
-            timeout-ms = <50>;
-            key-positions = <0 1>;
-            bindings = <&kp ESC>;
-        };
-        combo_tab {
-            timeout-ms = <50>;
-            key-positions = <10 11>;
-            bindings = <&kp TAB>;
-        };
-        combo_ralt {
-            timeout-ms = <50>;
-            key-positions = <17 16>;
-            bindings = <&kp RALT>;
-        };
-        combo_lalt {
-            timeout-ms = <50>;
-            key-positions = <11 12>;
-            bindings = <&kp LALT>;
-        };
-        combo_lgui {
-            timeout-ms = <50>;
-            key-positions = <12 13>;
-            bindings = <&kp LGUI>;
-        };
-        combo_rgui {
-            timeout-ms = <50>;
-            key-positions = <17 18>;
-            bindings = <&kp RGUI>;
-        };
-    }; */
+    ╭─────────────────╮ ╭─────────────────╮
+    │    0  1  2  3  4│ │ 5  6  7  8  9   │
+    │10 11 12 13 14 15│ │16 17 18 19 20 21│
+    │22 23 24 25 26 27│ │28 29 30 31 32 33│
+    ╰────────╮34 35 36│ │37 38 39╭────────╯
+             ╰────────╯ ╰────────╯       */
 
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
+// ╭─────────────────────╮ ╭──────────────────────╮
+// │  Q  W  E  R  T      │ │  Y  U  I  O  P       │
+// │⇧ A  S  D  F  G      │ │  H  J  K  L  Ö     Å │
+// │⌃ Z  X  C  V  B      │ │  N  M  ,  .  -     Ä │
+// ╰────╮ESC/L2 ALT SPC  │ │ RET BSP/⌘ TAB/L1╭───╯
+//      ╰─────────────────╯ ╰─────────────────╯
             bindings = <
-            &kp Q  &kp W  &kp E           &kp R          &kp T       &kp Y        &kp U        &kp I         &kp O       &kp P
-&kp LSHIFT  &kp A  &kp S  &kp D           &kp F          &kp G       &kp H        &kp J        &kp K         &kp L       &kp SE_OO      &kp SE_AE
-&kp LCTRL   &kp Z  &kp X  &kp C           &kp V          &kp B       &kp N        &kp M        &kp COMMA     &kp DOT     &kp SE_QMARK   &kp SE_AA
-                          &lt NUMBER TAB  &hm LALT LGUI  &kp SPACE  &kp ENTER  &lt SYMBOLS_SWE BSPC  &lt FUNC ESC
+            &kp Q  &kp W  &kp E  &kp R  &kp T       &kp Y  &kp U  &kp I      &kp O    &kp P
+&kp LSHFT   &kp A  &kp S  &kp D  &kp F  &kp G       &kp H  &kp J  &kp K      &kp L    &kp SE_OO     &kp SE_AE
+&kp LCTRL   &kp Z  &kp X  &kp C  &kp V  &kp B       &kp N  &kp M  &kp COMMA  &kp DOT  &kp SE_MINUS  &kp SE_AA
+              &lt NAV_SYM ESC  &kp LALT  &kp SPACE   &kp RET  &hm LGUI BSPC  &lt NUM_FN TAB
             >;
         };
 
-        gaming_layer {
+        num_fn_layer {
+// ╭─────────────────────╮ ╭──────────────────────╮
+// │  1  2  3  4  5      │ │  6  7  8  9  0       │
+// │  F1 F2 F3 F4 F5     │ │  F6 F7 F8 F9 F10     │
+// │                     │ │  ⇦        F11 F12     │
+// ╰────╮                │ │              ╭────────╯
+//      ╰─────────────────╯ ╰─────────────╯
             bindings = <
-            &kp N1  &kp N2  &kp N3     &kp N4     &kp N5   &kp J  &kp L                 &kp U         &kp Y       &kp BSPC
-&kp LSHIFT  &kp Q   &kp W   &kp E      &kp R      &kp Y    &kp M  &hm RCTRL N           &hm RSHIFT E  &hm RALT I  &hs RGUI O  &none
-&kp TAB     &kp A   &kp S   &kp D      &kp F      &kp G    &kp Z  &kp N                 &kp E         &kp I       &kp O       &none
-                            &kp LCTRL  &kp SPACE  &kp ESC  &none  &lt SYMBOLS_SWE BSPC  &lt FUNC ESC
+            &kp N1  &kp N2  &kp N3  &kp N4  &kp N5      &kp N6         &kp N7  &kp N8  &kp N9   &kp N0
+&trans      &kp F1  &kp F2  &kp F3  &kp F4  &kp F5      &kp F6         &kp F7  &kp F8  &kp F9   &kp F10  &trans
+&trans      &trans  &trans  &trans  &trans  &trans       &kp C_AC_BACK  &trans  &trans  &kp F11  &kp F12  &trans
+                    &trans  &trans  &trans               &trans         &trans  &trans
             >;
         };
 
-        symbols_swe_layer {
+        nav_sym_layer {
+// ╭─────────────────────╮ ╭──────────────────────╮
+// │              '      │ │ PgUp Home ↑  End Del  │
+// │     <  [  {  (      │ │ PgDn ←    ↓  →        │
+// │  |  >  ]  }  )     │ │  ⇦                     │
+// ╰────╮                │ │              ╭────────╯
+//      ╰─────────────────╯ ╰─────────────╯
             bindings = <
-            &kp SE_EXCL   &kp SE_AT     &kp SE_HASH   &kp SE_DLLR   &kp SE_PRCNT  &kp SE_CARET  &kp SE_AMPS  &kp SE_FSLH   &kp SE_LPAR  &kp SE_RPAR
-&kp LSHIFT  &kp SE_SQT    &kp SE_DQT    &kp SE_STAR   &kp SE_GRAVE  &kp SE_LBKT   &kp SE_LBRC   &kp SE_PLUS  &kp SE_EQUAL  &kp SE_PIPE  &none        &kp PSCRN
-&kp LGUI    &none         &kp SE_TILDE  &kp SE_CARET  &kp SE_QMARK  &kp SE_RBKT   &kp SE_RBRC   &kp DEL        &kp SE_LT     &kp SE_GT    &kp SE_FSLH  &kp SE_MINUS
-                                        &none         &kp SE_FSLH   &trans        &trans        &trans       &lt FUNC ESC
-            >;
-        };
-
-        func_layer {
-            bindings = <
-       &none     &kp F1  &kp F2   &kp F3   &kp F4   &kp HOME    &kp PG_UP  &kp UP      &kp PG_DN   &kp DEL
-&kp LSHIFT  &none     &kp F5  &kp F6   &kp F7   &kp F8   &kp END     &kp LEFT   &kp DOWN    &kp RIGHT   &none    &kp C_VOL_UP
-&kp LCTRL  &kp CAPS  &kp F9  &kp F10  &kp F11  &kp F12  &kp C_PREV  &kp C_PP   &kp C_NEXT  &kp K_MUTE  &none    &kp C_VOL_DN
-                         &none    &trans   &trans   &trans      &trans     &none
-            >;
-        };
-
-        number_layer {
-            bindings = <
-            &kp N1  &kp N2  &kp N3  &kp N4     &kp N5        &kp N6        &kp N7        &kp N8         &kp N9       &kp N0
-&kp LSHIFT  &kp N6  &kp N7  &kp N8  &kp N9     &kp N0        &kp SE_MINUS  &hm RCTRL N4  &hm RSHIFT N5  &hm RALT N6  &hm RGUI COMMA  &none
-&kp LGUI    &none   &none   &none   &none      &kp SE_EQUAL  &kp SE_PLUS   &kp N1        &kp N2         &kp N3       &kp DOT         &none
-                            &none   &kp LCTRL  &trans        &trans        &none         &kp N0
-            >;
-        };
-
-        settings_layer {
-            bindings = <
-       &studio_unlock  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &ext_power EP_ON  &ext_power EP_OFF  &none  &none  &none
-&none  &bt BT_CLR      &none         &none         &none         &none         &none             &none              &none  &none  &none  &to GAMING
-&none  &out OUT_BLE    &out OUT_USB  &none         &none         &bootloader   &bootloader       &none              &none  &none  &none  &to DEFAULT
-                                   &none         &trans        &trans        &trans            &trans             &none
+            &none       &none      &none       &none       &kp SE_SQT      &kp PG_UP      &kp HOME  &kp UP    &kp END    &kp DEL
+&trans      &none       &kp SE_LT  &kp SE_LBKT &kp SE_LBRC &kp SE_LPAR    &kp PG_DN      &kp LEFT  &kp DOWN  &kp RIGHT  &none  &none
+&trans      &kp SE_PIPE &kp SE_GT  &kp SE_RBKT &kp SE_RBRC &kp SE_RPAR    &kp C_AC_BACK  &none     &none     &none      &none  &none
+                        &trans     &trans      &trans                      &trans         &trans    &trans
             >;
         };
     };
